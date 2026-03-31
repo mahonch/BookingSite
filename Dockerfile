@@ -48,5 +48,5 @@ ENV SERVER_PORT=8080
 # Открываем порт
 EXPOSE 8080
 
-# Запускаем приложение
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Запускаем приложение с указанием профиля
+ENTRYPOINT ["java", "-Dspring.profiles.active=production", "-jar", "app.jar"]
