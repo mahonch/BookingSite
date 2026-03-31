@@ -1,0 +1,42 @@
+services:
+  # Backend - Spring Boot API
+  - type: web
+    name: forum-booking-backend
+    env: java
+    region: frankfurt
+    plan: free
+    buildCommand: cd backend && mvn clean package -DskipTests
+    startCommand: cd backend && java -jar target/booking-backend-1.0.0.jar
+    envVars:
+      - key: JAVA_VERSION
+        value: 21
+      - key: DATABASE_URL
+        fromDatabase:
+          name: forum-db
+          property: connectionString
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: forum-db
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: forum-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: forum-db
+          property: password
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+      - key: APP_JWT_SECRET
+        generateValue: true
+      - key: APP_CORS_ALLOWED_ORIGINS
+        value: https://forum-booking-frontend.onrender.com,https://yourdomain.com
+    healthCheckPath: /api/forum-date
+
+databases:
+  - name: forum-db
+    databaseName: forum_booking
+    user: forum_user
+    plan: free
+    region: frankfurt

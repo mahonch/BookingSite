@@ -1,0 +1,13 @@
+# Frontend build для Render
+nodeVersion: 18.17.0
+
+buildCommand: |
+  npm install
+  npm run build
+
+publishDir: dist
+outputDir: dist
+
+# Environment variables для build
+environment:
+  VITE_API_BASE_URL: https://forum-booking-backend.onrender.com/api
